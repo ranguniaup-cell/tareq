@@ -1,0 +1,6 @@
+{
+  "name": "MD Tareq Portfolio",
+  "description": "মোঃ তারেক (MD Tareq) - পেশাদার পোর্টফোলিও, পল্লী সঞ্চয় ব্যাংক কর্মকর্তা, একাউন্টিং বিশেষজ্ঞ এবং ওয়েব ডেভেলপার। হালকা গোল্ড থিম, এআই ফটো স্টুডিও ও পিডব্লিউএ সুবিধা সমৃদ্ধ।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
