@@ -1,12 +1,13 @@
 import React from 'react';
-import { Language } from '../types';
-import { User, Heart, Compass, Award, CheckCircle2, Target } from 'lucide-react';
+import { Language, ProfileInfo } from '../types';
+import { User, Compass, CheckCircle2 } from 'lucide-react';
 
 interface AboutProps {
   language: Language;
+  profile?: ProfileInfo;
 }
 
-export const About: React.FC<AboutProps> = ({ language = 'bn' }) => {
+export const About: React.FC<AboutProps> = ({ language = 'bn', profile }) => {
   const values = [
     {
       titleBn: 'আর্থিক অন্তর্ভুক্তি ও সেবা',
@@ -33,6 +34,8 @@ export const About: React.FC<AboutProps> = ({ language = 'bn' }) => {
       descEn: 'Pioneering cashless literacy and digital banking among rural members.',
     },
   ];
+
+  const bioContent = language === 'bn' ? profile?.bioBn : profile?.bioEn;
 
   return (
     <section id="about" className="py-20 px-4 bg-white relative">
@@ -70,29 +73,38 @@ export const About: React.FC<AboutProps> = ({ language = 'bn' }) => {
                 <Compass className="w-5 h-5 text-amber-600" />
                 <span>{language === 'bn' ? 'আমার পথচলা ও অভিজ্ঞতা' : 'My Journey & Experience'}</span>
               </h3>
-              <p className="text-sm sm:text-base leading-relaxed">
-                {language === 'bn' ? (
-                  <>
-                    আমি <strong>মোঃ তারেক (MD Tareq)</strong>। জাতীয় বিশ্ববিদ্যালয় থেকে হিসাববিজ্ঞানে <strong>এমবিএ (MBA in Accounting)</strong> ডিগ্রি অর্জনের মাধ্যমে আমার পেশাগত ভিত্তি তৈরি হয়। বর্তমানে দেশের তৃণমূল জনগণের পাশে থেকে <strong>পল্লী সঞ্চয় ব্যাংক</strong>-এ <strong>মাঠ সহকারী কর্মকর্তা</strong> হিসেবে দায়িত্ব পালন করছি। ক্ষুদ্র ঋণ ব্যবস্থাপনা, সদস্য সঞ্চয় উৎসাহিতকরণ এবং ডিজিটাল ব্যাংকিং সেবায় প্রতিদিন মানুষকে সহযোগিতা করতে পারা আমার পরম আনন্দের।
-                  </>
-                ) : (
-                  <>
-                    I am <strong>MD Tareq (মোঃ তারেক)</strong>. Armed with an <strong>MBA in Accounting (National University)</strong>, I have dedicated my career to grass-roots financial inclusion as a <strong>Field Assistant Officer at Palli Sanchay Bank</strong>. Every day, I help rural families manage micro-credit, build sustainable savings habits, and adopt digital banking.
-                  </>
-                )}
-              </p>
               
-              <p className="text-sm sm:text-base leading-relaxed mt-4">
-                {language === 'bn' ? (
-                  <>
-                    পেশাগত দায়িত্বের পাশাপাশি <strong>বিভিন্ন ধরণের ওয়েবসাইট তৈরি আমার বিশেষ শখ</strong>। ডিজিটাল বাংলাদেশ থেকে স্মার্ট বাংলাদেশের পথে প্রযুক্তিগত কার্যক্রম ও আধুনিক ওয়েব ইন্টারফেস তৈরি করতে আমার দারুণ ভালো লাগে। আমি বিশ্বাস করি, একজন হিসাববিজ্ঞান ও ব্যাংকিং পেশাজীবী যখন ওয়েব প্রযুক্তিতে পারদর্শী হন, তখন তিনি যেকোনো জটিল কার্যক্রমকে সহজেই অটোমেট ও প্রাঞ্জল করতে পারেন।
-                  </>
-                ) : (
-                  <>
-                    In addition to my banking responsibilities, <strong>building diverse web applications is my deep passion</strong>. I find genuine joy in crafting interactive, user-friendly digital tools that simplify everyday tasks. Combining accounting rigor with modern web design allows me to build solutions that are both precise and aesthetically delightful.
-                  </>
-                )}
-              </p>
+              {bioContent ? (
+                <p className="text-sm sm:text-base leading-relaxed whitespace-pre-line">
+                  {bioContent}
+                </p>
+              ) : (
+                <>
+                  <p className="text-sm sm:text-base leading-relaxed">
+                    {language === 'bn' ? (
+                      <>
+                        আমি <strong>{profile?.nameBn || 'মোঃ তারেক'}</strong>। জাতীয় বিশ্ববিদ্যালয় থেকে হিসাববিজ্ঞানে <strong>এমবিএ (MBA in Accounting)</strong> ডিগ্রি অর্জনের মাধ্যমে আমার পেশাগত ভিত্তি তৈরি হয়। বর্তমানে দেশের তৃণমূল জনগণের পাশে থেকে <strong>পল্লী সঞ্চয় ব্যাংক</strong>-এ <strong>মাঠ সহকারী কর্মকর্তা</strong> হিসেবে দায়িত্ব পালন করছি। ক্ষুদ্র ঋণ ব্যবস্থাপনা, সদস্য সঞ্চয় উৎসাহিতকরণ এবং ডিজিটাল ব্যাংকিং সেবায় প্রতিদিন মানুষকে সহযোগিতা করতে পারা আমার পরম আনন্দের।
+                      </>
+                    ) : (
+                      <>
+                        I am <strong>{profile?.nameEn || 'MD Tareq'}</strong>. Armed with an <strong>MBA in Accounting (National University)</strong>, I have dedicated my career to grass-roots financial inclusion as a <strong>Field Assistant Officer at Palli Sanchay Bank</strong>. Every day, I help rural families manage micro-credit, build sustainable savings habits, and adopt digital banking.
+                      </>
+                    )}
+                  </p>
+                  
+                  <p className="text-sm sm:text-base leading-relaxed mt-4">
+                    {language === 'bn' ? (
+                      <>
+                        পেশাগত দায়িত্বের পাশাপাশি <strong>বিভিন্ন ধরণের ওয়েবসাইট তৈরি আমার বিশেষ শখ</strong>। ডিজিটাল বাংলাদেশ থেকে স্মার্ট বাংলাদেশের পথে প্রযুক্তিগত কার্যক্রম ও আধুনিক ওয়েব ইন্টারফেস তৈরি করতে আমার দারুণ ভালো লাগে। আমি বিশ্বাস করি, একজন হিসাববিজ্ঞান ও ব্যাংকিং পেশাজীবী যখন ওয়েব প্রযুক্তিতে পারদর্শী হন, তখন তিনি যেকোনো জটিল কার্যক্রমকে সহজেই অটোমেট ও প্রাঞ্জল করতে পারেন।
+                      </>
+                    ) : (
+                      <>
+                        In addition to my banking responsibilities, <strong>building diverse web applications is my deep passion</strong>. I find genuine joy in crafting interactive, user-friendly digital tools that simplify everyday tasks. Combining accounting rigor with modern web design allows me to build solutions that are both precise and aesthetically delightful.
+                      </>
+                    )}
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Quick checklist */}

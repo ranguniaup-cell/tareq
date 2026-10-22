@@ -3,6 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <!-- Suppress expected HMR WebSocket disconnects in AI Studio preview -->
+    <script>
+      (function() {
+        const originalError = console.error;
+        console.error = function(...args) {
+          const isViteWsError = args.some(function(arg) {
+            if (typeof arg === 'string') {
+              return arg.includes('WebSocket closed without opened') || (arg.includes('[vite]') && arg.includes('WebSocket'));
+            }
+            if (arg && typeof arg === 'object' && arg.message) {
+              return typeof arg.message === 'string' && arg.message.includes('WebSocket closed without opened');
+            }
+            return false;
+          });
+          if (isViteWsError) return;
+          originalError.apply(console, args);
+        };
+      })();
+    </script>
     <title>MD Tareq Portfolio - মোঃ তারেক</title>
     <meta name="description" content="মোঃ তারেক (MD Tareq) - পেশাদার পোর্টফোলিও, পল্লী সঞ্চয় ব্যাংক কর্মকর্তা, একাউন্টিং বিশেষজ্ঞ এবং ওয়েব ডেভেলপার। হালকা গোল্ড থিম, এআই ফটো স্টুডিও ও পিডব্লিউএ সুবিধা সমৃদ্ধ।" />
     

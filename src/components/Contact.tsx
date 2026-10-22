@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
-import { Language } from '../types';
-import { Phone, Mail, MapPin, Send, MessageSquare, CheckCircle, Building2, Download } from 'lucide-react';
+import { Language, ProfileInfo } from '../types';
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Send,
+  MessageSquare,
+  CheckCircle,
+  Building2,
+  Download,
+  Facebook,
+  Linkedin,
+  Github,
+  Twitter,
+  Youtube,
+  Globe,
+  Share2,
+} from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface ContactProps {
   language: Language;
+  profile?: ProfileInfo;
 }
 
-export const Contact: React.FC<ContactProps> = ({ language = 'bn' }) => {
+export const Contact: React.FC<ContactProps> = ({ language = 'bn', profile }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -18,6 +35,11 @@ export const Contact: React.FC<ContactProps> = ({ language = 'bn' }) => {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
+  const email = profile?.email || 'ranguniaup@gmail.com';
+  const location = language === 'bn' ? (profile?.locationBn || 'রাঙ্গুনিয়া, চট্টগ্রাম, বাংলাদেশ') : (profile?.locationEn || 'Rangunia, Chattogram, Bangladesh');
+  const organization = language === 'bn' ? (profile?.organizationBn || 'পল্লী সঞ্চয় ব্যাংক, মাঠ শাখা') : (profile?.organizationEn || 'Palli Sanchay Bank');
+  const whatsapp = profile?.whatsapp || '8801819000000';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +56,6 @@ export const Contact: React.FC<ContactProps> = ({ language = 'bn' }) => {
       confetti({ particleCount: 70, spread: 60 });
       setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch {
-      // Graceful fallback
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
@@ -45,10 +66,11 @@ export const Contact: React.FC<ContactProps> = ({ language = 'bn' }) => {
     const vcard = `BEGIN:VCARD
 VERSION:3.0
 N:Tareq;MD;;;
-FN:MD Tareq (মোঃ তারেক)
-ORG:Palli Sanchay Bank
+FN:${profile?.nameEn || 'MD Tareq'} (${profile?.nameBn || 'মোঃ তারেক'})
+ORG:${profile?.organizationEn || 'Palli Sanchay Bank'}
 TITLE:Field Assistant Officer
-EMAIL;TYPE=INTERNET:ranguniaup@gmail.com
+EMAIL;TYPE=INTERNET:${email}
+TEL;TYPE=CELL:${profile?.phone || '01819000000'}
 NOTE:MBA in Accounting (NU). Passionate Web Developer & Digital Creator.
 END:VCARD`;
 
@@ -92,7 +114,6 @@ END:VCARD`;
           
           {/* Contact Details & Info (5 cols) */}
           <div className="lg:col-span-5 space-y-5">
-            {/* Direct Cards */}
             <div className="p-6 rounded-3xl bg-gradient-to-br from-[#fefbf6] to-[#fffdfa] border-2 border-amber-200/80 shadow-xs space-y-5">
               <h3 className="text-lg font-bold text-stone-900 font-bangla flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-amber-600" />
@@ -100,57 +121,63 @@ END:VCARD`;
               </h3>
 
               {/* Email */}
-              <a
-                href="mailto:ranguniaup@gmail.com?subject=Regarding%20Portfolio%20Inquiry"
-                className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-amber-200/80 hover:border-amber-400 hover:shadow-xs transition group"
-              >
-                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-stone-950 transition">
-                  <Mail className="w-5 h-5" />
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-stone-500 font-bangla">
-                    {language === 'bn' ? 'অফিসিয়াল ও ব্যক্তিগত ইমেইল' : 'Email'}
-                  </p>
-                  <p className="text-sm font-bold text-stone-900 font-sans break-all">
-                    ranguniaup@gmail.com
-                  </p>
-                </div>
-              </a>
+              {email && (
+                <a
+                  href={`mailto:${email}?subject=Regarding%20Portfolio%20Inquiry`}
+                  className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-amber-200/80 hover:border-amber-400 hover:shadow-xs transition group"
+                >
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:text-stone-950 transition">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-stone-500 font-bangla">
+                      {language === 'bn' ? 'অফিসিয়াল ও ব্যক্তিগত ইমেইল' : 'Email'}
+                    </p>
+                    <p className="text-sm font-bold text-stone-900 font-sans break-all">
+                      {email}
+                    </p>
+                  </div>
+                </a>
+              )}
 
               {/* Organization */}
-              <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-amber-200/80">
-                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
-                  <Building2 className="w-5 h-5" />
+              {organization && (
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-amber-200/80">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                    <Building2 className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-stone-500 font-bangla">
+                      {language === 'bn' ? 'কর্মক্ষেত্র' : 'Workplace'}
+                    </p>
+                    <p className="text-sm font-bold text-stone-900 font-bangla">
+                      {organization}
+                    </p>
+                    <p className="text-xs text-amber-800 font-bangla">ফিল্ড অ্যাসিস্ট্যান্ট অফিসার</p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-stone-500 font-bangla">
-                    {language === 'bn' ? 'কর্মক্ষেত্র' : 'Workplace'}
-                  </p>
-                  <p className="text-sm font-bold text-stone-900 font-bangla">
-                    পল্লী সঞ্চয় ব্যাংক, মাঠ শাখা
-                  </p>
-                  <p className="text-xs text-amber-800 font-bangla">ফিল্ড অ্যাসিস্ট্যান্ট অফিসার</p>
-                </div>
-              </div>
+              )}
 
               {/* Location */}
-              <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-amber-200/80">
-                <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5" />
+              {location && (
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-amber-200/80">
+                  <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                    <MapPin className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-stone-500 font-bangla">
+                      {language === 'bn' ? 'অবস্থান' : 'Location'}
+                    </p>
+                    <p className="text-sm font-bold text-stone-900 font-bangla">
+                      {location}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-xs font-semibold text-stone-500 font-bangla">
-                    {language === 'bn' ? 'অবস্থান' : 'Location'}
-                  </p>
-                  <p className="text-sm font-bold text-stone-900 font-bangla">
-                    রাঙ্গুনিয়া, চট্টগ্রাম, বাংলাদেশ
-                  </p>
-                </div>
-              </div>
+              )}
 
               {/* WhatsApp Quick Link */}
               <a
-                href="https://wa.me/8801819000000?text=Hello%20Tareq%20bhai,%20I%20visited%20your%20portfolio"
+                href={`https://wa.me/${whatsapp}?text=Hello%20Tareq%20bhai,%20I%20visited%20your%20portfolio`}
                 target="_blank"
                 rel="noreferrer"
                 className="w-full py-3 px-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2"
@@ -167,6 +194,107 @@ END:VCARD`;
                 <span>{language === 'bn' ? 'যোগাযোগ কার্ড (vCard) ডাউনলোড' : 'Save vCard to Contacts'}</span>
               </button>
             </div>
+
+            {/* Social Media Networks Card */}
+            {profile?.socialLinks && Object.values(profile.socialLinks).some((v) => v && v.trim()) && (
+              <div className="p-6 rounded-3xl bg-amber-50/60 border-2 border-amber-200 shadow-sm space-y-3">
+                <div className="flex items-center gap-2 text-stone-900 font-bold text-sm">
+                  <Share2 className="w-4 h-4 text-amber-700" />
+                  <span>{language === 'bn' ? 'সামাজিক যোগাযোগ ও নেটওয়ার্ক' : 'Social Networks'}</span>
+                </div>
+                <p className="text-xs text-stone-600 font-bangla leading-relaxed">
+                  {language === 'bn'
+                    ? 'অনলাইনে যুক্ত হতে নিচের সোশ্যাল প্রোফাইলগুলোতে ভিজিট করতে পারেন:'
+                    : 'Connect with me across these digital platforms:'}
+                </p>
+
+                <div className="grid grid-cols-2 gap-2 pt-1">
+                  {profile.socialLinks.facebook && (
+                    <a
+                      href={profile.socialLinks.facebook}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <Facebook className="w-4 h-4 text-[#1877F2] shrink-0" />
+                      <span className="truncate">Facebook</span>
+                    </a>
+                  )}
+
+                  {profile.socialLinks.linkedin && (
+                    <a
+                      href={profile.socialLinks.linkedin}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <Linkedin className="w-4 h-4 text-[#0A66C2] shrink-0" />
+                      <span className="truncate">LinkedIn</span>
+                    </a>
+                  )}
+
+                  {profile.socialLinks.whatsapp && (
+                    <a
+                      href={profile.socialLinks.whatsapp.startsWith('http') ? profile.socialLinks.whatsapp : `https://wa.me/${profile.socialLinks.whatsapp.replace(/[^0-9]/g, '')}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <MessageSquare className="w-4 h-4 text-[#25D366] shrink-0" />
+                      <span className="truncate">WhatsApp</span>
+                    </a>
+                  )}
+
+                  {profile.socialLinks.github && (
+                    <a
+                      href={profile.socialLinks.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <Github className="w-4 h-4 text-stone-900 shrink-0" />
+                      <span className="truncate">GitHub</span>
+                    </a>
+                  )}
+
+                  {profile.socialLinks.twitter && (
+                    <a
+                      href={profile.socialLinks.twitter}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <Twitter className="w-4 h-4 text-stone-800 shrink-0" />
+                      <span className="truncate">Twitter / X</span>
+                    </a>
+                  )}
+
+                  {profile.socialLinks.youtube && (
+                    <a
+                      href={profile.socialLinks.youtube}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <Youtube className="w-4 h-4 text-[#FF0000] shrink-0" />
+                      <span className="truncate">YouTube</span>
+                    </a>
+                  )}
+
+                  {profile.socialLinks.website && (
+                    <a
+                      href={profile.socialLinks.website}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="p-2.5 rounded-xl bg-white hover:bg-amber-100 text-stone-800 border border-amber-200 text-xs font-semibold flex items-center gap-2 transition shadow-2xs group"
+                    >
+                      <Globe className="w-4 h-4 text-amber-700 shrink-0" />
+                      <span className="truncate">Website</span>
+                    </a>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Contact Form (7 cols) */}

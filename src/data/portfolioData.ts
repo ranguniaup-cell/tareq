@@ -1,4 +1,12 @@
-import { PhotoItem, WorkExperience, EducationItem, WebProject } from '../types';
+import {
+  PhotoItem,
+  WorkExperience,
+  EducationItem,
+  WebProject,
+  SkillCategoryItem,
+  ProfileInfo,
+  SectionVisibility,
+} from '../types';
 
 export const initialPhotos: PhotoItem[] = [
   {
@@ -45,7 +53,36 @@ export const initialPhotos: PhotoItem[] = [
   },
 ];
 
-export const workExperience: WorkExperience = {
+export const initialProfileInfo: ProfileInfo = {
+  nameBn: 'মোঃ তারেক',
+  nameEn: 'MD Tareq',
+  titleBn: 'মাঠ সহকারী কর্মকর্তা • পল্লী সঞ্চয় ব্যাংক | এমবিএ (অ্যাকাউন্টিং, এনইউ)',
+  titleEn: 'Field Assistant Officer • Palli Sanchay Bank | MBA in Accounting (NU)',
+  bioBn:
+    'আমি বর্তমানে পল্লী সঞ্চয় ব্যাংক-এ মাঠ সহকারী কর্মকর্তা হিসেবে দায়িত্ব পালন করছি এবং জাতীয় বিশ্ববিদ্যালয় থেকে হিসাববিজ্ঞানে এমবিএ ডিগ্রিধারী। বিভিন্ন ধরণের আধুনিক ওয়েবসাইট তৈরি আমার শখ, ডিজিটাল কার্যক্রম পরিচালনা এবং ওয়েব উদ্ভাবন আমার ভালোলাগা।',
+  bioEn:
+    'Currently serving as a Field Assistant Officer at Palli Sanchay Bank with an MBA in Accounting (NU). Beyond professional banking, I am an enthusiastic Web Designer & Creator passionate about digital transformation.',
+  organizationBn: 'পল্লী সঞ্চয় ব্যাংক (Palli Sanchay Bank)',
+  organizationEn: 'Palli Sanchay Bank',
+  email: 'ranguniaup@gmail.com',
+  phone: '01819000000',
+  whatsapp: '8801819000000',
+  locationBn: 'রাঙ্গুনিয়া, চট্টগ্রাম, বাংলাদেশ',
+  locationEn: 'Rangunia, Chattogram, Bangladesh',
+  quoteBn: '“পরিশ্রম ও প্রযুক্তির সঠিক সমন্বয়ই এনে দিতে পারে জীবনের শ্রেষ্ঠ সাফল্য।”',
+  quoteEn: '“Hard work and proper technology alignment create the greatest achievements in life.”',
+  socialLinks: {
+    facebook: 'https://facebook.com',
+    linkedin: 'https://linkedin.com',
+    whatsapp: 'https://wa.me/8801819000000',
+    github: 'https://github.com',
+    twitter: '',
+    youtube: '',
+    website: '',
+  },
+};
+
+export const initialWorkExperience: WorkExperience = {
   roleBn: 'ফিল্ড অ্যাসিস্ট্যান্ট অফিসার (মাঠ সহকারী কর্মকর্তা)',
   roleEn: 'Field Assistant Officer',
   organizationBn: 'পল্লী সঞ্চয় ব্যাংক (Palli Sanchay Bank)',
@@ -82,8 +119,9 @@ export const workExperience: WorkExperience = {
   ],
 };
 
-export const educationList: EducationItem[] = [
+export const initialEducationList: EducationItem[] = [
   {
+    id: 'edu-1',
     degreeBn: 'মাস্টার্স অব বিজনেস অ্যাডমিনিস্ট্রেশন (এমবিএ)',
     degreeEn: 'Master of Business Administration (MBA)',
     majorBn: 'হিসাববিজ্ঞান (Accounting)',
@@ -106,6 +144,7 @@ export const educationList: EducationItem[] = [
     ],
   },
   {
+    id: 'edu-2',
     degreeBn: 'ব্যাচেলর অব বিজনেস স্টাডিজ (বিবিএস অনার্স)',
     degreeEn: 'Bachelor of Business Studies (BBS Honors)',
     majorBn: 'হিসাববিজ্ঞান (Accounting)',
@@ -127,7 +166,7 @@ export const educationList: EducationItem[] = [
   },
 ];
 
-export const webProjectsList: WebProject[] = [
+export const initialWebProjectsList: WebProject[] = [
   {
     id: 'proj-1',
     titleBn: 'পল্লী লোন ও সঞ্চয় ক্যালকুলেটর ওয়েব অ্যাপ',
@@ -190,8 +229,9 @@ export const webProjectsList: WebProject[] = [
   },
 ];
 
-export const skillsData = [
+export const initialSkillsData: SkillCategoryItem[] = [
   {
+    id: 'cat-1',
     categoryBn: 'হিসাববিজ্ঞান ও ব্যাংকিং দক্ষতা',
     categoryEn: 'Accounting & Banking Expertise',
     skills: [
@@ -202,6 +242,7 @@ export const skillsData = [
     ],
   },
   {
+    id: 'cat-2',
     categoryBn: 'ওয়েব ডিজাইন ও টেকনোলজি (শখ ও আগ্রহ)',
     categoryEn: 'Web Development & Tech (Passion)',
     skills: [
@@ -212,3 +253,13 @@ export const skillsData = [
     ],
   },
 ];
+
+export const initialSectionVisibility: SectionVisibility = {
+  hero: true,
+  about: true,
+  education: true,
+  work: true,
+  projects: true,
+  aiStudio: true,
+  contact: true,
+};

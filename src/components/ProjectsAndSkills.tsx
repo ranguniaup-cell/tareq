@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
-import { webProjectsList, skillsData } from '../data/portfolioData';
-import { Language } from '../types';
+import { WebProject, SkillCategoryItem, Language } from '../types';
 import {
   Code2,
   Sparkles,
-  ExternalLink,
   Calculator,
   Laptop,
-  CheckCircle,
-  HelpCircle,
-  Coins,
-  ArrowRight,
 } from 'lucide-react';
 
 interface ProjectsAndSkillsProps {
   language: Language;
+  projects: WebProject[];
+  skills: SkillCategoryItem[];
 }
 
-export const ProjectsAndSkills: React.FC<ProjectsAndSkillsProps> = ({ language = 'bn' }) => {
+export const ProjectsAndSkills: React.FC<ProjectsAndSkillsProps> = ({
+  language = 'bn',
+  projects,
+  skills,
+}) => {
   // Interactive Live Micro-Loan & Savings Calculator Widget (Tareq's Signature Passion Tool)
   const [loanAmount, setLoanAmount] = useState<number>(20000);
   const [loanTenureMonths, setLoanTenureMonths] = useState<number>(12);
@@ -199,86 +199,92 @@ export const ProjectsAndSkills: React.FC<ProjectsAndSkillsProps> = ({ language =
         </div>
 
         {/* Web Projects Cards Grid */}
-        <div className="mb-16">
-          <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 font-bangla mb-6 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-amber-600" />
-            <span>{language === 'bn' ? 'অন্যান্য ওয়েব ডিজাইন ও কনসেপ্ট প্রজেক্ট' : 'Web Portfolio & Concepts'}</span>
-          </h3>
+        {projects && projects.length > 0 && (
+          <div className="mb-16">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-stone-900 font-bangla mb-6 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-600" />
+              <span>{language === 'bn' ? 'অন্যান্য ওয়েব ডিজাইন ও কনসেপ্ট প্রজেক্ট' : 'Web Portfolio & Concepts'}</span>
+            </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {webProjectsList.map((proj) => (
-              <div
-                key={proj.id}
-                className="p-6 rounded-3xl bg-white border border-amber-200/80 shadow-xs hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-bold text-amber-900 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 font-bangla">
-                      {language === 'bn' ? proj.categoryBn : proj.categoryEn}
-                    </span>
-                    {proj.isHobbyHighlight && (
-                      <span className="text-[11px] text-amber-600 font-bold flex items-center gap-1 font-bangla">
-                        <Sparkles className="w-3.5 h-3.5 fill-current" />
-                        {language === 'bn' ? 'শখের প্রজেক্ট' : 'Passion'}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {projects.map((proj) => (
+                <div
+                  key={proj.id}
+                  className="p-6 rounded-3xl bg-white border border-amber-200/80 shadow-xs hover:border-amber-400 hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[11px] font-bold text-amber-900 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200 font-bangla">
+                        {language === 'bn' ? proj.categoryBn : proj.categoryEn}
                       </span>
-                    )}
+                      {proj.isHobbyHighlight && (
+                        <span className="text-[11px] text-amber-600 font-bold flex items-center gap-1 font-bangla">
+                          <Sparkles className="w-3.5 h-3.5 fill-current" />
+                          {language === 'bn' ? 'শখের প্রজেক্ট' : 'Passion'}
+                        </span>
+                      )}
+                    </div>
+
+                    <h4 className="text-lg font-bold text-stone-900 font-bangla group-hover:text-amber-800 transition">
+                      {language === 'bn' ? proj.titleBn : proj.titleEn}
+                    </h4>
+
+                    <p className="text-xs sm:text-sm text-stone-600 mt-2 leading-relaxed font-bangla">
+                      {language === 'bn' ? proj.descriptionBn : proj.descriptionEn}
+                    </p>
                   </div>
 
-                  <h4 className="text-lg font-bold text-stone-900 font-bangla group-hover:text-amber-800 transition">
-                    {language === 'bn' ? proj.titleBn : proj.titleEn}
-                  </h4>
-
-                  <p className="text-xs sm:text-sm text-stone-600 mt-2 leading-relaxed font-bangla">
-                    {language === 'bn' ? proj.descriptionBn : proj.descriptionEn}
-                  </p>
+                  {proj.tags && proj.tags.length > 0 && (
+                    <div className="mt-5 pt-4 border-t border-stone-100 flex flex-wrap items-center gap-1.5">
+                      {proj.tags.map((t, tidx) => (
+                        <span
+                          key={tidx}
+                          className="text-[10px] px-2 py-0.5 rounded-md bg-stone-100 text-stone-700 font-medium"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  )}
                 </div>
+              ))}
+            </div>
+          </div>
+        )}
 
-                <div className="mt-5 pt-4 border-t border-stone-100 flex flex-wrap items-center gap-1.5">
-                  {proj.tags.map((t, tidx) => (
-                    <span
-                      key={tidx}
-                      className="text-[10px] px-2 py-0.5 rounded-md bg-stone-100 text-stone-700 font-medium"
-                    >
-                      {t}
-                    </span>
+        {/* Skills Proficiency Grid */}
+        {skills && skills.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {skills.map((cat) => (
+              <div
+                key={cat.id}
+                className="p-6 sm:p-8 rounded-3xl bg-white border-2 border-amber-200/80 shadow-xs"
+              >
+                <h4 className="text-lg font-extrabold text-stone-900 font-bangla mb-5 flex items-center gap-2">
+                  <Laptop className="w-5 h-5 text-amber-600" />
+                  <span>{language === 'bn' ? cat.categoryBn : cat.categoryEn}</span>
+                </h4>
+
+                <div className="space-y-4 font-bangla">
+                  {cat.skills.map((sk, sIdx) => (
+                    <div key={sIdx}>
+                      <div className="flex justify-between text-xs font-semibold text-stone-800 mb-1">
+                        <span>{language === 'bn' ? sk.nameBn : sk.nameEn}</span>
+                        <span className="text-amber-700 font-bold font-sans">{sk.level}%</span>
+                      </div>
+                      <div className="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden p-0.5 border border-stone-200">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 transition-all duration-1000"
+                          style={{ width: `${sk.level}%` }}
+                        />
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Skills Proficiency Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {skillsData.map((cat, cIdx) => (
-            <div
-              key={cIdx}
-              className="p-6 sm:p-8 rounded-3xl bg-white border-2 border-amber-200/80 shadow-xs"
-            >
-              <h4 className="text-lg font-extrabold text-stone-900 font-bangla mb-5 flex items-center gap-2">
-                <Laptop className="w-5 h-5 text-amber-600" />
-                <span>{language === 'bn' ? cat.categoryBn : cat.categoryEn}</span>
-              </h4>
-
-              <div className="space-y-4 font-bangla">
-                {cat.skills.map((sk, sIdx) => (
-                  <div key={sIdx}>
-                    <div className="flex justify-between text-xs font-semibold text-stone-800 mb-1">
-                      <span>{language === 'bn' ? sk.nameBn : sk.nameEn}</span>
-                      <span className="text-amber-700 font-bold font-sans">{sk.level}%</span>
-                    </div>
-                    <div className="w-full h-2.5 bg-stone-100 rounded-full overflow-hidden p-0.5 border border-stone-200">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 transition-all duration-1000"
-                        style={{ width: `${sk.level}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        )}
       </div>
     </section>
   );

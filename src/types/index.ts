@@ -61,6 +61,7 @@ export interface WorkExperience {
 }
 
 export interface EducationItem {
+  id?: string;
   degreeBn: string;
   degreeEn: string;
   majorBn: string;
@@ -87,4 +88,56 @@ export interface WebProject {
   demoUrl?: string;
   iconName: string;
   isHobbyHighlight?: boolean;
+}
+
+export interface SkillItem {
+  nameBn: string;
+  nameEn: string;
+  level: number;
+}
+
+export interface SkillCategoryItem {
+  id: string;
+  categoryBn: string;
+  categoryEn: string;
+  skills: SkillItem[];
+}
+
+export interface SocialLinks {
+  facebook?: string;
+  linkedin?: string;
+  whatsapp?: string;
+  github?: string;
+  twitter?: string;
+  youtube?: string;
+  website?: string;
+}
+
+export interface ProfileInfo {
+  nameBn: string;
+  nameEn: string;
+  titleBn: string;
+  titleEn: string;
+  bioBn: string;
+  bioEn: string;
+  organizationBn: string;
+  organizationEn: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+  locationBn: string;
+  locationEn: string;
+  quoteBn: string;
+  quoteEn: string;
+  socialLinks?: SocialLinks;
+}
+
+export interface SectionVisibility {
+  hero: boolean;
+  about: boolean;
+  education: boolean;
+  work: boolean;
+  projects: boolean;
+  aiStudio: boolean;
+  contact: boolean;
 }

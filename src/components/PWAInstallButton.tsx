@@ -42,13 +42,8 @@ export const PWAInstallButton: React.FC<PWAInstallButtonProps> = ({
     if (isInstallable) {
       await install();
       setShowAutoBanner(false);
-    } else if (isIOS) {
-      setShowIOSGuide(true);
     } else {
-      // General browser fallback instructions
-      alert(language === 'bn' 
-        ? 'ব্রাউজারের মেনু (৩ ডট) থেকে "Add to Home screen" বা "Install App" অপশনে ক্লিক করুন।' 
-        : 'Please tap the browser menu (3 dots) and select "Add to Home screen".');
+      setShowIOSGuide(true);
     }
   };
 
